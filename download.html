@@ -6,14 +6,21 @@
     <title>File Download</title>
     <script>
         window.onload = function() {
-            var link = document.createElement('a');
-            link.href = 'Darin Tanner_public.asc';
-            link.download = 'Darin Tanner_public.asc';
-            link.style.display = 'Darin Tanner_public.asc';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
+            fetch('Darin Tanner_public.asc')
+            .then(response => response.blob())
+            .then(blob => {
+                var url = window.URL.createObjectURL(blob);
+                var link = document.createElement('a');
+                link.href = url;
+                link.download = 'Darin Tanner_public.asc';
+                link.style.display = 'none';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                window.URL.revokeObjectURL(url);
+            })
+            .catch(error => console.error('An error occurred:', error));
+        };
     </script>
 </head>
 <body></body>
